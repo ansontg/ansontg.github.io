@@ -1,4 +1,4 @@
-html{
+html {
     font-family: 'Roboto', sans-serif;
     background: silver;
     padding: 40px 60px;
@@ -10,7 +10,7 @@ h1 {
     background: white;
     border-radius: 10px;
     padding: 2px 16px;
-    font-size: 4rem;
+    font-size: 5rem;
 }
 
 h2 {
