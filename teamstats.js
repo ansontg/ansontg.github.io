@@ -21,6 +21,8 @@ function team(number, name, notes, objective_score, consistency, driver_skill, i
 
 var teams = [];
 
+
+
 //app.appendChild(logo);
 app.appendChild(container);
 
@@ -31,8 +33,8 @@ request.onload = function () {
     // Begin accessing JSON data here
     var retrieved = JSON.parse(this.response);
     if (request.status = "SUCCESS") {
+        
         var i = 0;
-
         retrieved.data.forEach(group => {
 
             teams.push(new team(
@@ -49,6 +51,7 @@ request.onload = function () {
             ));
             i++;
         });
+        console.log(teams[1].number);
 
         function compareNumber(a, b) {
             return a.number - b.number;
@@ -83,12 +86,12 @@ request.onload = function () {
         }*/
         
         teams.sort(compareNumber);
-
-        //function drawCards()
-        var i, len;
-                    
-        for (i = 0, len = teams.length; i < len; ++i) {
-            
+        
+        
+        var i;
+        for (i = 0; i < teams.length; ++i) {
+            var table = document.createElement('table');
+            var row = [];
 
             const card = document.createElement('div');
             card.setAttribute('class', 'card');
@@ -102,73 +105,49 @@ request.onload = function () {
             const issues = document.createElement('p');
             issues.textContent = "Issues: " + teams[i].issues;
             
-            const table = document.createElement('table');
-            
-            const tablebody = document.createElement('tbody');
-            
-            var row = [];
-            
-            for (var j = 0; j < 2; j++){
-                row.push(document.createElement('tr'));
-                row[j].setAttribute('horizontal', '');
-            }
-            
-            
-            const consistencyCell = row[0].insertCell(0);
-            const objectiveScoreCell = row[0].insertCell(1);
-            const driverSkillCell = row[1].insertCell(0);
-            const autonomousCell = row[1].insertCell(1);
-            
-            const consistencyTitle = document.createElement('p');
-            consistencyTitle.textContent = "Consistency: " + teams[i].consistency;
-            
+
+            row.push(table.insertRow(0));
+            consistencyCell = row[0].insertCell(0);
+            consistencyCell.innerHTML = 'Consistency: ' + teams[i].consistency;
+            objectiveScoreCell = row[0].insertCell(1);
+            objectiveScoreCell.innerHTML = 'Objective Score: ' + teams[i].objective_score;
+            row.push(table.insertRow(1));
+            pconsistencyCell = row[1].insertCell(0);
             const consistency = document.createElement('progress');
             consistency.value = teams[i].consistency;
             consistency.max = 10;
-            
-            consistencyCell.appendChild(consistencyTitle);
-            consistencyCell.appendChild(consistency);
-            
-            const objectiveScoreTitle = document.createElement('p');
-            objectiveScoreTitle.textContent = "Objective Score: " + teams[i].objective_score;
-            
-            const objectiveScore = document.createElement('progress');
-            objectiveScore.value = teams[i].objective_score;
-            objectiveScore.max = 10;
-            
-            consistencyCell.appendChild(objectiveScoreTitle);
-            consistencyCell.appendChild(objectiveScore);
-            
-            const driverSkillTitle = document.createElement('p');
-            driverSkillTitle.textContent = "Driver Skill: " + teams[i].driver_skill;
-            
-            const driverSkill = document.createElement('progress');
-            driverSkill.value = teams[i].driver_skill;
-            driverSkill.max = 10;
-            
-            consistencyCell.appendChild(driverSkillTitle);
-            consistencyCell.appendChild(driverSkill);
-            
-            const autonomousTitle = document.createElement('p');
-            autonomousTitle.textContent = "Autonomous: " + teams[i].autonomous;
-            
+            pconsistencyCell.appendChild(consistency);
+            pobjectiveScoreCell = row[1].insertCell(1);
+            const objectivescore = document.createElement('progress');
+            objectivescore.value = teams[i].objective_score;
+            objectivescore.max = 10;
+            pobjectiveScoreCell.appendChild(objectivescore);
+            row.push(table.insertRow(2));
+            driverSkillCell = row[2].insertCell(0);
+            driverSkillCell.innerHTML = 'Driver Skill: ' + teams[i].driver_skill;
+            autonomousCell = row[2].insertCell(1);
+            autonomousCell.innerHTML = 'Autonomous: ' + teams[i].autonomous;
+            row.push(table.insertRow(3));
+            pdriverSkillCell = row[3].insertCell(0);
+            const driverskill = document.createElement('progress');
+            driverskill.value = teams[i].driver_skill;
+            driverskill.max = 10;
+            pdriverSkillCell.appendChild(driverskill);
+            pautonomousCell = row[3].insertCell(1);
             const autonomous = document.createElement('progress');
             autonomous.value = teams[i].autonomous;
             autonomous.max = 10;
+            pautonomousCell.appendChild(autonomous);
             
-            consistencyCell.appendChild(autonomousTitle);
-            consistencyCell.appendChild(autonomous);
-            
+   
+          
+
 
             container.appendChild(card);
             card.appendChild(title);
             card.appendChild(notes);
             card.appendChild(issues);
             
-            tablebody.appendChild(row[0]);
-            tablebody.appendChild(row[1]);
-
-            table.appendChild(tablebody);
             card.appendChild(table);
             
         }
