@@ -19,7 +19,12 @@ h2 {
     font-size: 1.5rem;
 }
 
-
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
 
 .card {
     margin: 1rem;
