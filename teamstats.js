@@ -51,7 +51,6 @@ request.onload = function () {
             ));
             i++;
         });
-        console.log(teams[1].number);
 
         function compareNumber(a, b) {
             return a.number - b.number;
