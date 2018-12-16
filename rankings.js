@@ -6,13 +6,14 @@ logo.src = 'logo.png';
 const container = document.createElement('div');
 container.setAttribute('class', 'container');
 
+//Globals
 var teams = [];
 var row = [];
 var table = document.createElement('table');
 table.id = "rankingstable";
 
 
-
+//Struct for teams storage
 function team(number, name, notes, objective_score, consistency, driver_skill, issues, created_at, updated_at, autonomous) {
     this.number = number;
     this.name = name;
@@ -26,8 +27,8 @@ function team(number, name, notes, objective_score, consistency, driver_skill, i
     this.autonomous = autonomous;
 }
 
+//Makes header of table (with sort buttons)
 function drawHeader() {
-
     row.push(table.insertRow(0));
     numberCell = row[0].insertCell(0);
     numberCell.innerHTML = '<input type = "button" value = "Team Number" id = numberButton onclick = "teams.sort(compareNumber); refreshTable()"></input>';
@@ -45,9 +46,9 @@ function drawHeader() {
     autonomousCell.innerHTML = '<input type = "button" value = "Autonomous" id = nameButton onclick = "teams.sort(compareAutonomous); refreshTable()"></input>';
     issuesCell = row[0].insertCell(7);
     issuesCell.innerHTML = "Issues";
-
 }
 
+//Draws "body" of table
 function drawTable() {
     var i, len, j = 0;
     for (i = 1, len = teams.length; i <= len; ++i) {
@@ -73,6 +74,7 @@ function drawTable() {
     container.appendChild(table);
 }
 
+//Cycles through rows and updates each cell with sorted information
 function refreshTable() {
     var i, j = 0;
     for (i = 1; i <= teams.length; ++i) {
@@ -90,12 +92,6 @@ function refreshTable() {
     }
 }
 
-function clearTable() {
-    var i, len;
-    for (i = 1, len = teams.length; i < len; ++i) {
-        table.deleteRow(1);
-    }
-}
 
 function compareNumber(a, b) {
     console.log("compare number run");
@@ -133,6 +129,7 @@ function compareAutonomous(a, b) {
 
 app.appendChild(container);
 
+//Access API
 var request = new XMLHttpRequest();
 request.open('GET', 'https://frscout.herokuapp.com/api/v1/teams', true);
 request.onload = function () {
@@ -144,6 +141,7 @@ request.onload = function () {
 
         retrieved.data.forEach(group => {
 
+            //Push to team array
             teams.push(new team(
                 retrieved.data[i].number,
                 retrieved.data[i].name,
@@ -160,6 +158,7 @@ request.onload = function () {
         });
 
 
+        //Draw table and add to page
         drawHeader();
         drawTable();
         container.appendChild(table);

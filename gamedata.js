@@ -126,10 +126,6 @@ request.onload = function () {
             blueteam3.textContent = matches[i].blue_alliance_3;
             
 
-
-
-
-
             container.appendChild(card);
             card.appendChild(number);
 
